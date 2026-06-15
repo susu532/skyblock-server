@@ -214,8 +214,8 @@ export function createGameServer(io: any, db: any, mode: GameModeInfo, genWorker
       return true;
     }
 
-    // Disable building at spawn (5 block radius)
-    if (absX <= 5 && absZ <= 5) {
+    // Disable building at spawn (5 block radius) for other modes, but not SummerLab
+    if (!worldName.startsWith('summerlab') && absX <= 5 && absZ <= 5) {
       return true;
     }
 
@@ -702,17 +702,17 @@ const ctx: import("./GameContext").GameContext = {
     players[id] = {
       id,
       isBot: true,
-      position: { x: respawnData.x, y: respawnData.y, z: respawnData.z },
+      position: { x: -1.5, y: respawnData.y, z: 1.5 },
       velocity: { x: 0, y: 0, z: 0 },
       rotation: respawnData.yaw !== undefined ? { x: 0, y: respawnData.yaw, z: 0 } : { x: 0, y: 0, z: 0 },
       skinSeed: "cool_kid_123",
-      name: "smol fish20563008",
+      name: "chubby dolphin405566981",
       health: 100,
       maxHealth: 100,
       defense: 0,
       team: undefined,
       isDead: false,
-      heldItem: 521, // FLUID_CHOCOLATE_HOSE
+      heldItem: 0, // no item
       offHandItem: 0,
       joinTime: Date.now(),
       lastRespawnTime: Date.now()

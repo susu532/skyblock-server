@@ -832,8 +832,23 @@ const floats = getFloat32Array(buf);
       const lx = ((x % CHUNK_SIZE) + CHUNK_SIZE) % CHUNK_SIZE;
       const lz = ((z % CHUNK_SIZE) + CHUNK_SIZE) % CHUNK_SIZE;
       const ly = y - WORLD_Y_OFFSET;
+      const oldBlock = getBlockAt(x, y, z) || 0;
+      
       chunkManager.setBlockInChunk(cx, cz, lx, ly, lz, type);
       chunkManager.markChunkDirty(x, z);
+
+      if (type === 0 && worldName.startsWith('summerlab')) {
+        if (oldBlock === 4 || oldBlock === 5) { // 4 is WOOD, 5 is LEAVES
+          setTimeout(() => {
+            // Restore only if no new block was placed
+            if (getBlockAt(x, y, z) === 0) {
+              chunkManager.setBlockInChunk(cx, cz, lx, ly, lz, oldBlock);
+              chunkManager.markChunkDirty(x, z);
+              ioNamespace.emit("blockChanged", { x, y, z, type: oldBlock });
+            }
+          }, 20000);
+        }
+      }
 
       if (type === 0) {
         const removedKeys: string[] = [];

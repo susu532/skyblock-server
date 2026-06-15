@@ -1536,19 +1536,6 @@ let cachedAtlasDataUrl: string | null = null;
 let cachedSummerLabAtlasDataUrl: string | null = null;
 
 export function getTextureAtlasDataUrl(): string {
-  const isSummerLab = typeof window !== 'undefined' && 
-         (new URLSearchParams(window.location.search).get('server')?.startsWith('summerlab') || 
-          window.location.pathname.includes('summerlab'));
-  const useSummerLabAtlas = isSummerLab && getSummerLabPhase() !== 2;
-
-  if (useSummerLabAtlas) {
-    if (cachedSummerLabAtlasDataUrl) return cachedSummerLabAtlasDataUrl;
-    const texture = createSummerLabTextureAtlas();
-    const canvas = texture.image as HTMLCanvasElement;
-    cachedSummerLabAtlasDataUrl = canvas.toDataURL();
-    return cachedSummerLabAtlasDataUrl;
-  }
-
   if (cachedAtlasDataUrl) return cachedAtlasDataUrl;
   
   const texture = createTextureAtlas();

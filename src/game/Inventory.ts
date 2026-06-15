@@ -724,61 +724,6 @@ export class Inventory {
 
   constructor(size: number = 37) {
     this.slots = new Array(size).fill(null);
-    if (size === 37) {
-      // Start with some basic items for testing only for player inventory
-      // Use silent=true to avoid store updates during initialization/render
-      this.addItem(ItemType.WOOD, 4, undefined, true);
-      this.addItem(ItemType.STONE, 8, undefined, true);
-      this.addItem(ItemType.TORCH, 64, undefined, true);
-      this.addItem(ItemType.LAUNCHER, 64, undefined, true);
-      this.addItem(ItemType.CHEST, 64, undefined, true);
-      this.addItem(ItemType.BOW, 1, undefined, true);
-      this.addItem(ItemType.ARROW, 64, undefined, true);
-      
-      // Add some SkyBridge items
-      this.addItem(ItemType.ASPECT_OF_THE_END, 1, {
-      rarity: Rarity.RARE,
-      stats: { damage: 80, strength: 60 },
-      description: "Teleport 8 blocks ahead of you and gain +50 Speed for 3 seconds.",
-      ability: {
-        name: "Instant Transmission",
-        description: "Teleport 8 blocks ahead of you and gain +50 Speed for 3 seconds.",
-        manaCost: 50
-      }
-    }, true);
-
-    this.addItem(ItemType.BLUE_STONE, 1, {
-      rarity: Rarity.RARE,
-      stats: { strength: 10, critChance: 5, miningFortune: 150, miningSpeed: 100 },
-      description: "A powerful stone from the deep caverns.",
-      ability: {
-        name: "Deep Strike",
-        description: "Dash forward with extreme speed.",
-        manaCost: 40
-      }
-    }, true);
-
-    this.addItem(ItemType.RED_STONE, 1, {
-      rarity: Rarity.LEGENDARY,
-      stats: { health: 50, defense: 20 },
-      description: "Infused with the essence of a dragon.",
-      ability: {
-        name: "Dragon's Breath",
-        description: "Creates a blast of fire around the player.",
-        manaCost: 100,
-        cooldown: 10
-      }
-    }, true);
-
-    this.addItem(ItemType.MINION, 1, {
-      rarity: Rarity.RARE,
-      description: "Places a minion that generates cobblestone.",
-      ability: {
-        name: "Automate",
-        description: "Generates 1 cobblestone every 10 seconds."
-      }
-    }, true);
-    }
   }
 
   clear() {
