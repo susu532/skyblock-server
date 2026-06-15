@@ -1,4 +1,5 @@
 import { ItemType } from '../Inventory';
+import { SUMMER_LAB_INFINITE_BLOCKS } from '../SummerLabInfiniteBlocks';
 
 export function generateSummerLabColumn(chunk: any, x: number, z: number, worldX: number, worldZ: number): void {
   for (let fy = -20; fy <= 350; fy++) {
@@ -38,6 +39,12 @@ export function getSummerLabBlock(x: number, y: number, z: number): number {
   // A chest for the player (x=-1, z=-1)
   if (x === -1 && fy === 1 && z === -1) {
     return ItemType.CHEST;
+  }
+  
+  for (const block of SUMMER_LAB_INFINITE_BLOCKS) {
+    if (x === block.x && fy === block.y && z === block.z) {
+      return block.type;
+    }
   }
   
   return ItemType.AIR;

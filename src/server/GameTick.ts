@@ -519,6 +519,18 @@ export function tick(ctx: GameContext, delta: number) {
           } else {
             if (p.position.y < -20) {
               p.health = 0; // fall to death
+              if (!p.isDead) {
+                p.isDead = true;
+                p.deaths = (p.deaths || 0) + 1;
+                ioNamespace.emit("playerStatsUpdate", { 
+                  id: p.id, 
+                  kills: p.kills || 0, 
+                  deaths: p.deaths,
+                  health: p.health
+                });
+                ioNamespace.emit("chatMessage", { sender: "System", message: `${p.name || 'Unknown'} fell into the void` });
+                broadcastToNearby("playerDied", { id: p.id }, p.position.x, p.position.z, 22500, null);
+              }
             }
           }
 

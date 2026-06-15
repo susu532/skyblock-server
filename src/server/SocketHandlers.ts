@@ -839,14 +839,53 @@ const floats = getFloat32Array(buf);
 
       if (type === 0 && worldName.startsWith('summerlab')) {
         if (oldBlock === 4 || oldBlock === 5) { // 4 is WOOD, 5 is LEAVES
-          setTimeout(() => {
+          const attemptRestore = () => {
             // Restore only if no new block was placed
             if (getBlockAt(x, y, z) === 0) {
+              let playerInWay = false;
+              for (const pid in players) {
+                const pl = players[pid];
+                if (!pl || pl.isDead) continue;
+                // Block bounding box is roughly [x, x+1], [y, y+1], [z, z+1]
+                // Player is roughly [px-0.3, px+0.3], [py, py+1.8], [pz-0.3, pz+0.3]
+                // AABB collision logic:
+                // Note: pl.position in server corresponds to the player's top (camera height)
+                // The bottom of the player is at pl.position.y - 1.6 (approx player height).
+                const overlapX = pl.position.x + 0.3 > x && pl.position.x - 0.3 < x + 1;
+                const overlapY = pl.position.y > y && pl.position.y - 1.6 < y + 1;
+                const overlapZ = pl.position.z + 0.3 > z && pl.position.z - 0.3 < z + 1;
+                if (overlapX && overlapY && overlapZ) {
+                  playerInWay = true;
+                  break;
+                }
+              }
+
+              if (!playerInWay) {
+                for (const mobId in mobs) {
+                  const m = mobs[mobId];
+                  if (!m || m.health <= 0) continue;
+                  // Mob position is typically its center base. Assuming height 1, radius 0.5:
+                  const overlapX = m.position.x + 0.5 > x && m.position.x - 0.5 < x + 1;
+                  const overlapY = m.position.y + 1 > y && m.position.y < y + 1;
+                  const overlapZ = m.position.z + 0.5 > z && m.position.z - 0.5 < z + 1;
+                  if (overlapX && overlapY && overlapZ) {
+                    playerInWay = true;
+                    break;
+                  }
+                }
+              }
+
+              if (playerInWay) {
+                setTimeout(attemptRestore, 3000); // Try again in 3 seconds if blocked
+                return;
+              }
+
               chunkManager.setBlockInChunk(cx, cz, lx, ly, lz, oldBlock);
               chunkManager.markChunkDirty(x, z);
               ioNamespace.emit("blockChanged", { x, y, z, type: oldBlock });
             }
-          }, 20000);
+          };
+          setTimeout(attemptRestore, 20000);
         }
       }
 

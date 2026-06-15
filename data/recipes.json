@@ -605,5 +605,74 @@
       "count": 1
     },
     "is3x3": true
+  },
+  {
+    "input": [
+      "PLANKS", "PLANKS",
+      "PLANKS", "PLANKS"
+    ],
+    "output": {
+      "type": "CRAFTING_TABLE",
+      "count": 1
+    },
+    "is3x3": false
+  },
+  {
+    "input": [
+      "COBBLESTONE", "COBBLESTONE", "COBBLESTONE",
+      "COBBLESTONE", null,          "COBBLESTONE",
+      "COBBLESTONE", "COBBLESTONE", "COBBLESTONE"
+    ],
+    "output": {
+      "type": "FURNACE",
+      "count": 1
+    },
+    "is3x3": true
+  },
+  {
+    "input": [
+      null, "STICK", "STRING",
+      "STICK", null, "STRING",
+      null, "STICK", "STRING"
+    ],
+    "output": {
+      "type": "BOW",
+      "count": 1
+    },
+    "is3x3": true
+  },
+  {
+    "input": [
+      "STICK", "FEATHER"
+    ],
+    "output": {
+      "type": "ARROW",
+      "count": 4
+    },
+    "is3x3": false,
+    "shapeless": true
+  },
+  {
+    "input": [
+      "IRON_INGOT", null, "IRON_INGOT",
+      null, "IRON_INGOT", null
+    ],
+    "output": {
+      "type": "BUCKET",
+      "count": 1
+    },
+    "is3x3": true
+  },
+  {
+    "input": [
+      null, null, "STICK",
+      null, "STICK", "STRING",
+      "STICK", null, "STRING"
+    ],
+    "output": {
+      "type": "FISHING_ROD",
+      "count": 1
+    },
+    "is3x3": true
   }
 ]

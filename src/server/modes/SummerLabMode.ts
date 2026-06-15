@@ -41,7 +41,10 @@ export class SummerLabMode implements GameModeInfo {
     const fy = Math.floor(y);
     const fz = Math.floor(z);
 
-    if (currentBlock === 2) return true;
+    if (currentBlock === 2) {
+       if (fx === 29 && fy === 1 && fz === -1) return false;
+       return true;
+    }
 
     return false;
   }
@@ -75,7 +78,7 @@ export class SummerLabMode implements GameModeInfo {
     chunkManager?: ChunkManager,
     bakedBlocks?: Map<string, number>,
   ): { x: number; y: number; z: number; yaw?: number } {
-    return { x: -1.5, y: 2.5, z: -1.5, yaw: Math.PI * 0.75 };
+    return { x: -1.5, y: 3.5, z: -1.5, yaw: Math.PI * 0.75 };
   }
 }
 

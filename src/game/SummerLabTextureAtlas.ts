@@ -127,7 +127,7 @@ export function createSummerLabTextureAtlas(): THREE.Texture {
     const uvs = BLOCK_UVS[blockId];
     if (!uvs) continue;
     
-    let color = SUMMERLAB_PALETTE[blockId % SUMMERLAB_PALETTE.length];
+    let color = ITEM_COLORS[blockId as unknown as keyof typeof ITEM_COLORS] || SUMMERLAB_PALETTE[blockId % SUMMERLAB_PALETTE.length];
     
     if (blockId === ItemType.CONCRETE_WHITE) color = '#FFFFFF';
     else if (blockId === ItemType.CONCRETE_BLACK) color = '#000000';
@@ -211,9 +211,31 @@ export function createSummerLabTextureAtlas(): THREE.Texture {
           ctx.strokeStyle = 'rgba(255, 255, 255, 0.5)';
           ctx.strokeRect(tx*size + 1, ty*size + 1, size - 2, size - 2);
        } else {
-          if (ty >= 27 && stdCanvas) {
+          if (stdCanvas) {
               ctx.clearRect(tx * size, ty * size, size, size);
-              ctx.drawImage(stdCanvas, tx * size, ty * size, size, size, tx * size, ty * size, size, size);
+              ctx.globalCompositeOperation = 'source-over';
+              
+              const isCustomConcrete = (ty === 14 || ty === 15) && tx >= 16;
+              const sourceX = isCustomConcrete ? 0 : tx * size;
+              const sourceY = isCustomConcrete ? 9 * size : ty * size;
+              
+              ctx.drawImage(stdCanvas, sourceX, sourceY, size, size, tx * size, ty * size, size, size);
+              
+              ctx.globalCompositeOperation = 'multiply';
+              ctx.fillStyle = color;
+              ctx.fillRect(tx * size, ty * size, size, size);
+              ctx.globalCompositeOperation = 'source-over';
+              if (hasFace) {
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(tx * size + 4, ty * size + 6, 2, 2);
+                ctx.fillRect(tx * size + 10, ty * size + 6, 2, 2);
+                ctx.fillRect(tx * size + 6, ty * size + 9, 1, 1);
+                ctx.fillRect(tx * size + 9, ty * size + 9, 1, 1);
+                ctx.fillRect(tx * size + 7, ty * size + 10, 2, 1);
+                ctx.fillStyle = '#ff88aa';
+                ctx.fillRect(tx * size + 2, ty * size + 7, 2, 1);
+                ctx.fillRect(tx * size + 12, ty * size + 7, 2, 1);
+              }
            } else {
               drawBeveledTile(tx, ty, color, hasFace);
            }

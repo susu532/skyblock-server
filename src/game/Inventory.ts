@@ -701,25 +701,7 @@ export class Inventory {
   isBuilder = false;
 
   damageItem(slotIndex: number, amount: number = 1): boolean {
-    const item = this.slots[slotIndex];
-    if (!item || !item.metadata || item.metadata.durability === undefined) return false;
-    
-    const newDurability = item.metadata.durability - amount;
-    if (newDurability <= 0) {
-       this.slots[slotIndex] = null;
-       useGameStore.getState().incrementInventoryVersion();
-       return true; // Item broke
-    }
-    
-    this.slots[slotIndex] = {
-      ...item,
-      metadata: {
-        ...item.metadata,
-        durability: newDurability
-      }
-    };
-    useGameStore.getState().incrementInventoryVersion();
-    return false; // Did not break
+    return false; // Tools are unbreakable
   }
 
   constructor(size: number = 37) {

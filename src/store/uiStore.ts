@@ -11,6 +11,7 @@ interface UIState {
   isServerJoinOpen: boolean;
   isLaunchMenuOpen: boolean;
   isChestOpen: boolean;
+  isWorkbenchOpen: boolean;
   isLoadoutOpen: boolean;
   isHUDVisible: boolean;
   isEmojiWheelOpen: boolean;
@@ -26,6 +27,7 @@ interface UIState {
   setServerJoinOpen: (open: boolean) => void;
   setLaunchMenuOpen: (open: boolean) => void;
   setChestOpen: (open: boolean) => void;
+  setWorkbenchOpen: (open: boolean) => void;
   setLoadoutOpen: (open: boolean) => void;
   setHUDVisible: (visible: boolean) => void;
   setEmojiWheelOpen: (open: boolean) => void;
@@ -45,6 +47,7 @@ export const useUIStore = create<UIState>((set) => ({
   isServerJoinOpen: false,
   isLaunchMenuOpen: false,
   isChestOpen: false,
+  isWorkbenchOpen: false,
   isLoadoutOpen: false,
   isHUDVisible: true,
   isEmojiWheelOpen: false,
@@ -60,6 +63,7 @@ export const useUIStore = create<UIState>((set) => ({
   setServerJoinOpen: (open) => set({ isServerJoinOpen: open }),
   setLaunchMenuOpen: (open) => set({ isLaunchMenuOpen: open }),
   setChestOpen: (open) => set({ isChestOpen: open }),
+  setWorkbenchOpen: (open) => set({ isWorkbenchOpen: open }),
   setLoadoutOpen: (open) => set({ isLoadoutOpen: open }),
   setHUDVisible: (visible) => set({ isHUDVisible: visible }),
   setEmojiWheelOpen: (open) => set({ isEmojiWheelOpen: open }),
@@ -75,6 +79,7 @@ export const useUIStore = create<UIState>((set) => ({
       isServerJoinOpen: false,
       isLaunchMenuOpen: false,
       isChestOpen: false,
+      isWorkbenchOpen: false,
       isLoadoutOpen: false,
       isEmojiWheelOpen: false,
       isEmoteWheelOpen: false,
